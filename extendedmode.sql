@@ -46,3 +46,46 @@ CREATE TABLE `jobs` (
 );
 
 INSERT INTO `jobs` VALUES ('unemployed','Unemployed');
+
+CREATE TABLE `licenses` (
+	`type` varchar(60) NOT NULL,
+	`label` varchar(60) NOT NULL,
+
+	PRIMARY KEY (`type`)
+);
+
+CREATE TABLE `user_licenses` (
+	`id` int NOT NULL AUTO_INCREMENT,
+	`type` varchar(60) NOT NULL,
+	`owner` varchar(40) NOT NULL,
+
+	PRIMARY KEY (`id`)
+);
+
+ALTER TABLE `users`
+	ADD COLUMN `firstname` VARCHAR(16) NULL DEFAULT NULL,
+	ADD COLUMN `lastname` VARCHAR(16) NULL DEFAULT NULL,
+	ADD COLUMN `dateofbirth` VARCHAR(10) NULL DEFAULT NULL,
+	ADD COLUMN `sex` VARCHAR(1) NULL DEFAULT NULL,
+	ADD COLUMN `height` INT NULL DEFAULT NULL
+;
+
+
+CREATE TABLE `datastore` (
+	`name` VARCHAR(60) NOT NULL,
+	`label` VARCHAR(100) NOT NULL,
+	`shared` INT NOT NULL,
+
+	PRIMARY KEY (`name`)
+);
+
+CREATE TABLE `datastore_data` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`name` VARCHAR(60) NOT NULL,
+	`owner` VARCHAR(40),
+	`data` LONGTEXT,
+
+	PRIMARY KEY (`id`),
+	UNIQUE INDEX `index_datastore_data_name_owner` (`name`, `owner`),
+	INDEX `index_datastore_data_name` (`name`)
+);
