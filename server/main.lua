@@ -26,6 +26,10 @@ function onPlayerJoined(playerId)
 				['@identifier'] = identifier
 			}, function(result)
 				if result then
+					MySQL.Async.execute('UPDATE users SET lastip = @lastip WHERE identifier = @identifier', {
+						['@lastip'] = tostring(GetPlayerEndpoint(playerId)),
+						['@identifier'] = identifier					
+					})
 					loadESXPlayer(identifier, playerId)
 				else
 					local accounts = {}
@@ -34,10 +38,11 @@ function onPlayerJoined(playerId)
 						accounts[account] = money
 					end
 
-					MySQL.Async.execute('INSERT INTO users (accounts, identifier, license) VALUES (@accounts, @identifier, @license)', {
+					MySQL.Async.execute('INSERT INTO users (accounts, identifier, license, lastip) VALUES (@accounts, @identifier, @license, @lastip)', {
 						['@accounts'] = json.encode(accounts),
 						['@identifier'] = identifier,
-						['@license'] = license,						
+						['@license'] = license,	
+						['@lastip'] = tostring(GetPlayerEndpoint(playerId)),	
 					}, function(rowsChanged)
 						loadESXPlayer(identifier, playerId)
 					end)
