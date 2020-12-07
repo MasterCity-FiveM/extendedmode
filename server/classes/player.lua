@@ -1,4 +1,4 @@
-function CreateExtendedPlayer(playerId, identifier, group, accounts, inventory, weight, job, loadout, name, coords)
+function CreateExtendedPlayer(playerId, identifier, group, accounts, inventory, weight, job, loadout, name, coords, verified, phone, lastip)
 	local self = {}
 
 	self.accounts = accounts
@@ -14,6 +14,9 @@ function CreateExtendedPlayer(playerId, identifier, group, accounts, inventory, 
 	self.variables = {}
 	self.weight = weight
 	self.maxWeight = Config.MaxWeight
+	self.verified = verified
+	self.phone = phone
+	self.lastip = lastip
 
 	ExecuteCommand(('add_principal identifier.%s group.%s'):format(self.identifier, self.group))
 

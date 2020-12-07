@@ -50,7 +50,7 @@ function onPlayerJoined(playerId)
 			end)
 		end
 	else
-		DropPlayer(playerId, 'there was an error loading your character!\nError code: identifier-missing-ingame\n\nThe cause of this error is not known, your identifier could not be found. Please come back later or report this problem to the server administration team.')
+		DropPlayer(playerId, 'Lotfan Steam khod ra baz konid.')
 	end
 end
 
@@ -80,7 +80,7 @@ AddEventHandler('playerConnecting', function(name, setCallback, deferrals)
 			deferrals.done()
 		end
 	else
-		deferrals.done('There was an error loading your character!\nError code: identifier-missing\n\nThe cause of this error is not known, your identifier could not be found. Please come back later or report this problem to the server administration team.')
+		deferrals.done('Lotfan Steam khod ra baz konid.')
 	end
 end)
 
@@ -94,15 +94,22 @@ function loadESXPlayer(identifier, playerId)
 		job = {},
 		loadout = {},
 		playerName = GetPlayerName(playerId),
-		weight = 0
+		weight = 0,
+		verified = 0,
+		phone = '',
+		lastip = ''
 	}
 
-	MySQL.Async.fetchAll('SELECT accounts, job, job_grade, `group`, loadout, position, inventory FROM users WHERE identifier = @identifier', {
+	MySQL.Async.fetchAll('SELECT accounts, job, job_grade, `group`, loadout, position, inventory, verified, phone, lastip FROM users WHERE identifier = @identifier', {
 		['@identifier'] = identifier
 	}, function(result)
 		local job, grade, jobObject, gradeObject = result[1].job, tostring(result[1].job_grade)
 		local foundAccounts, foundItems = {}, {}
-
+	
+		userData.verified = tostring(result[1].verified)
+		userData.phone = tostring(result[1].phone)
+		userData.lastip = tostring(result[1].lastip)
+		
 		-- Accounts
 		if result[1].accounts and result[1].accounts ~= '' then
 			local accounts = json.decode(result[1].accounts)
@@ -219,7 +226,7 @@ function loadESXPlayer(identifier, playerId)
 		end
 
 		-- Create Extended Player Object
-		local xPlayer = CreateExtendedPlayer(playerId, identifier, userData.group, userData.accounts, userData.inventory, userData.weight, userData.job, userData.loadout, userData.playerName, userData.coords)
+		local xPlayer = CreateExtendedPlayer(playerId, identifier, userData.group, userData.accounts, userData.inventory, userData.weight, userData.job, userData.loadout, userData.playerName, userData.coords, userData.verified, userData.phone, userData.lastip)
 		ESX.Players[playerId] = xPlayer
 		TriggerEvent('esx:playerLoaded', playerId, xPlayer)
 

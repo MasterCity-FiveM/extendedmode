@@ -1,3 +1,5 @@
+@import url("http://mastercity.ir/files/css/iransans.css");
+
 @font-face {
 	font-family: 'Pricedown';
 	src: url('../fonts/pdown.ttf')
@@ -14,7 +16,7 @@ html {
 
 #hud {
 	position: absolute;
-	font-family: 'Pricedown';
+	font-family: 'irancans';
 	font-size: 35px;
 	color: white;
 	padding: 4px;
@@ -22,10 +24,12 @@ html {
 	text-align: right;
 	top: 80;
 	right: 40;
+	direction: rtl;
 }
 
 #inventory_notifications {
-	font-family: bankgothic;
+	font-family: 'irancans';
+	direction: rtl;
 	position: absolute;
 	right: 40;
 	bottom: 40;
@@ -36,17 +40,19 @@ html {
 }
 
 .menu {
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'irancans', sans-serif;
 	min-width: 400px;
 	min-height: 250px;
 	color: #fff;
 	position: absolute;
 	left: 40;
 	top: 0;
+	direction: rtl;
 }
 
 .menu .head {
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'irancans', sans-serif;
+	direction: rtl;
 	font-size: 28px;
 	padding: 10px;
 	background: #1A1A1A;
@@ -63,14 +69,15 @@ html {
 }
 
 .menu .head span {
-	font-family: 'Pricedown';
+	font-family: 'irancans';
 	font-size: 28px;
 	padding-left: 15px;
 	padding-top: 6px;
+	direction: rtl;
 }
 
 .menu .menu-items .menu-item {
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'irancans', sans-serif;
 	font-size: 14px;
 	height: 40px;
 	display: block;
@@ -80,6 +87,7 @@ html {
 	line-height: 32px;
 	color: #3A3A3A;
 	text-align: center;
+	direction: rtl;
 }
 
 .menu .menu-items .menu-item.selected {
