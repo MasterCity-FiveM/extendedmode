@@ -316,6 +316,10 @@ function CreateExtendedPlayer(playerId, identifier, group, accounts, inventory, 
 	end
 
 	self.canCarryItem = function(name, count)
+		if self.weight == nil or ESX.Items[name].weight == nil then 
+			return true
+		end
+		
 		local currentWeight, itemWeight = self.weight, ESX.Items[name].weight
 		local newWeight = currentWeight + (itemWeight * count)
 		local inventoryitem = self.getInventoryItem(name)

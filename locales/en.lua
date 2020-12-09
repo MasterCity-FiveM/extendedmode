@@ -49,7 +49,7 @@ Locales['en'] = {
   ['bank'] = 'maze Bank',
   ['account_bank'] = 'bank',
   ['account_black_money'] = 'dirty Money',
-  ['account_money'] = 'cash',
+  ['account_money'] = 'Pol',
 
   ['act_imp'] = 'action impossible',
   ['in_vehicle'] = 'you can\'t give anything to someone in a vehicle',
