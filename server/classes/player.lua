@@ -367,6 +367,7 @@ function CreateExtendedPlayer(playerId, identifier, group, accounts, inventory, 
 			self.job.grade        = tonumber(grade)
 			self.job.grade_name   = gradeObject.name
 			self.job.grade_label  = gradeObject.label
+			self.job.grade_label_fa  = gradeObject.label_fa
 			self.job.grade_salary = gradeObject.salary
 
 			if gradeObject.skin_male then

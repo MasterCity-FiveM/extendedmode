@@ -143,6 +143,7 @@ function loadESXPlayer(identifier, playerId)
 		userData.job.grade = tonumber(grade)
 		userData.job.grade_name = gradeObject.name
 		userData.job.grade_label = gradeObject.label
+		userData.job.grade_label_fa = gradeObject.label_fa
 		userData.job.grade_salary = gradeObject.salary
 
 		userData.job.skin_male = {}
