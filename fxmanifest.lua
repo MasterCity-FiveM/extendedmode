@@ -3,7 +3,7 @@ game 'gta5'
 description 'extendedmode'
 version '1.0.1'
 
-resource_type 'gametype' { name = 'extendedmode' }
+resource_type 'gametype' { name = 'RolePlay' }
 
 server_scripts {
 	'server/metrics.lua',
