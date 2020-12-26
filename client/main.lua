@@ -193,6 +193,15 @@ AddEventHandler('esx:setJob', function(job)
 	ESX.PlayerData.job = job
 end)
 
+RegisterNetEvent('esx:setJobSub')
+AddEventHandler('esx:setJobSub', function(job)
+	if job ~= nil then
+		job = tostring(job):upper()
+	end
+	
+	ESX.PlayerData.job.job_sub = job
+end)
+
 RegisterNetEvent('esx:addWeapon')
 AddEventHandler('esx:addWeapon', function(weaponName, ammo)
 	-- Removed PlayerPedId() from being stored in a variable, not needed

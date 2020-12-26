@@ -359,7 +359,7 @@ function CreateExtendedPlayer(playerId, identifier, group, accounts, inventory, 
 
 		if ESX.DoesJobExist(job, grade) then
 			local jobObject, gradeObject = ESX.Jobs[job], ESX.Jobs[job].grades[grade]
-
+			
 			self.job.id    = jobObject.id
 			self.job.name  = jobObject.name
 			self.job.label = jobObject.label
@@ -384,9 +384,22 @@ function CreateExtendedPlayer(playerId, identifier, group, accounts, inventory, 
 
 			TriggerEvent('esx:setJob', self.source, self.job, lastJob)
 			self.triggerEvent('esx:setJob', self.job)
+			TriggerEvent('esx:setJobSub', self.source, job_sub)
+			self.triggerEvent('esx:setJobSub', job_sub)
 		else
 			print(('[ExtendedMode] [^3WARNING^7] Ignoring invalid .setJob() usage for "%s"'):format(self.identifier))
 		end
+	end
+
+	self.setJobSub = function(job_sub)
+		if job_sub ~= nil then
+			self.job.job_sub = tostring(job_sub):upper()
+		else
+			self.job.job_sub = ''
+		end
+		
+		TriggerEvent('esx:setJobSub', self.source, job_sub)
+		self.triggerEvent('esx:setJobSub', job_sub)
 	end
 
 	self.addWeapon = function(weaponName, ammo)

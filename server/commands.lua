@@ -18,6 +18,13 @@ end, true, {help = _U('command_setjob'), validate = true, arguments = {
 	{name = 'grade', help = _U('command_setjob_grade'), type = 'number'}
 }})
 
+ESX.RegisterCommand('setjobsub', 'admin', function(xPlayer, args, showError)
+	args.playerId.setJobSub(args.jobSub:upper())
+end, true, {help = _U('command_setjob'), validate = true, arguments = {
+	{name = 'playerId', help = _U('commandgeneric_playerid'), type = 'player'},
+	{name = 'jobSub', help = _U('command_setjob_job'), type = 'string'}
+}})
+
 ESX.RegisterCommand('car', 'admin', function(xPlayer, args, showError)
 	xPlayer.triggerEvent('esx:spawnVehicle', args.car)
 end, false, {help = _U('command_car'), validate = false, arguments = {

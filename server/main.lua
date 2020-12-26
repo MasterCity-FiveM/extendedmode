@@ -100,7 +100,7 @@ function loadESXPlayer(identifier, playerId)
 		lastip = ''
 	}
 
-	MySQL.Async.fetchAll('SELECT accounts, job, job_grade, `group`, loadout, position, inventory, verified, phone, lastip FROM users WHERE identifier = @identifier', {
+	MySQL.Async.fetchAll('SELECT accounts, job, job_grade, `group`, loadout, position, inventory, verified, phone, lastip, job_sub FROM users WHERE identifier = @identifier', {
 		['@identifier'] = identifier
 	}, function(result)
 		local job, grade, jobObject, gradeObject = result[1].job, tostring(result[1].job_grade)
@@ -145,6 +145,7 @@ function loadESXPlayer(identifier, playerId)
 		userData.job.grade_label = gradeObject.label
 		userData.job.grade_label_fa = gradeObject.label_fa
 		userData.job.grade_salary = gradeObject.salary
+		userData.job.job_sub = result[1].job_sub
 
 		userData.job.skin_male = {}
 		userData.job.skin_female = {}
