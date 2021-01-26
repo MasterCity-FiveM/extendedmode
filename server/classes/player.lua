@@ -363,6 +363,7 @@ function CreateExtendedPlayer(playerId, identifier, group, accounts, inventory, 
 			self.job.id    = jobObject.id
 			self.job.name  = jobObject.name
 			self.job.label = jobObject.label
+			self.job.label_fa = jobObject.label_fa
 
 			self.job.grade        = tonumber(grade)
 			self.job.grade_name   = gradeObject.name
