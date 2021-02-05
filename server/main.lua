@@ -100,7 +100,7 @@ function loadESXPlayer(identifier, playerId)
 		lastip = ''
 	}
 
-	MySQL.Async.fetchAll('SELECT accounts, job, job_grade, `group`, loadout, position, inventory, verified, phone, lastip, job_sub FROM users WHERE identifier = @identifier', {
+	MySQL.Async.fetchAll('SELECT accounts, job, firstname, lastname, job_grade, `group`, loadout, position, inventory, verified, phone, lastip, job_sub FROM users WHERE identifier = @identifier', {
 		['@identifier'] = identifier
 	}, function(result)
 		local job, grade, jobObject, gradeObject = result[1].job, tostring(result[1].job_grade)
@@ -109,6 +109,8 @@ function loadESXPlayer(identifier, playerId)
 		userData.verified = tostring(result[1].verified)
 		userData.phone = tostring(result[1].phone)
 		userData.lastip = tostring(result[1].lastip)
+		userData.firstname = tostring(result[1].firstname)
+		userData.lastname = tostring(result[1].lastname)
 		
 		-- Accounts
 		if result[1].accounts and result[1].accounts ~= '' then
@@ -229,7 +231,7 @@ function loadESXPlayer(identifier, playerId)
 		end
 
 		-- Create Extended Player Object
-		local xPlayer = CreateExtendedPlayer(playerId, identifier, userData.group, userData.accounts, userData.inventory, userData.weight, userData.job, userData.loadout, userData.playerName, userData.coords, userData.verified, userData.phone, userData.lastip)
+		local xPlayer = CreateExtendedPlayer(playerId, identifier, userData.group, userData.accounts, userData.inventory, userData.weight, userData.job, userData.loadout, userData.playerName, userData.coords, userData.verified, userData.phone, userData.lastip, userData.firstname, userData.lastname)
 		ESX.Players[playerId] = xPlayer
 		TriggerEvent('esx:playerLoaded', playerId, xPlayer)
 
