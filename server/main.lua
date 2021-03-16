@@ -445,6 +445,9 @@ AddEventHandler('esx:onPickup', function(id)
 		if pickup.type == 'item_standard' then
 			if xPlayer.canCarryItem(pickup.name, pickup.count) then
 				xPlayer.addInventoryItem(pickup.name, pickup.count)
+				if pickup.weaponID ~= nil then
+				   TriggerEvent('DP_Inventory:weaponID', pickup.weaponID, xPlayer.identifier)
+				end
 				success = true
 			else
 				xPlayer.showNotification(_U('threw_cannot_pickup'))
@@ -456,6 +459,9 @@ AddEventHandler('esx:onPickup', function(id)
 			if xPlayer.hasWeapon(pickup.name) then
 				xPlayer.showNotification(_U('threw_weapon_already'))
 			else
+				if pickup.weaponID ~= nil then
+				   TriggerEvent('DP_Inventory:weaponID', pickup.weaponID, xPlayer.identifier)
+				end
 				success = true
 				xPlayer.addWeapon(pickup.name, pickup.count)
 				xPlayer.setWeaponTint(pickup.name, pickup.tintIndex)

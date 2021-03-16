@@ -291,6 +291,30 @@ ESX.CreatePickup = function(type, name, count, label, playerId, components, tint
         ESX.Pickups[pickupId].tintIndex = tintIndex
     end
 
+	if name == 'WEAPON_PISTOL' or name == 'WEAPON_FLASHLIGHT' or name == 'WEAPON_STUNGUN' or name == 'WEAPON_KNIFE' or name == 'WEAPON_BAT' or name == 'WEAPON_ADVANCEDRIFLE' or name == 'WEAPON_APPISTOL' or name == 'WEAPON_ASSAULTRIFLE'
+	or name == 'WEAPON_ASSAULTSHOTGUN' or name == 'WEAPON_ASSAULTSMG' or name == 'WEAPON_AUTOSHOTGUN' or name == 'WEAPON_CARBINERIFLE' or name == 'WEAPON_SNIPERRIFLE' or name == 'WEAPON_COMBATPISTOL' or name == 'WEAPON_PUMPSHOTGUN' or name == 'WEAPON_SMG' then
+	   local hash = GetHashKey(name)
+	   MySQL.Async.fetchAll('SELECT * FROM ammunition WHERE hash = @hash AND owner = @owner', {
+		['@hash'] = hash,
+		['@owner'] =  xPlayer.identifier
+	   },function(results)
+		if #results ~= 0 then
+			if results[1].weapon_id then
+				ESX.Pickups[pickupId].weaponID = results[1].weapon_id
+				MySQL.Async.execute('UPDATE ammunition SET owner = @owner WHERE id = @id and hash = @hash and weapon_id = @weapon_id', {
+					['@id'] = results[1].id,
+					['@owner'] = nil,
+					['@weapon_id'] = results[1].weapon_id,
+					['@hash'] = hash
+				}, function(results2)
+				end)
+			else
+				ESX.Pickups[pickupId].weaponID = nil
+			end
+		end
+	   end)
+	end
+
     TriggerClientEvent('esx:createPickup', -1, pickupId, label, playerId, type, name, components, tintIndex, ExM.IsInfinity, pedCoords)
     ESX.PickupId = pickupId
 end
