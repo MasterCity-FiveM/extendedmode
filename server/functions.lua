@@ -299,7 +299,10 @@ ESX.CreatePickup = function(type, name, count, label, playerId, components, tint
     end
 
 	if name == 'WEAPON_PISTOL' or name == 'WEAPON_FLASHLIGHT' or name == 'WEAPON_STUNGUN' or name == 'WEAPON_KNIFE' or name == 'WEAPON_BAT' or name == 'WEAPON_ADVANCEDRIFLE' or name == 'WEAPON_APPISTOL' or name == 'WEAPON_ASSAULTRIFLE'
-	or name == 'WEAPON_ASSAULTSHOTGUN' or name == 'WEAPON_ASSAULTSMG' or name == 'WEAPON_AUTOSHOTGUN' or name == 'WEAPON_CARBINERIFLE' or name == 'WEAPON_SNIPERRIFLE' or name == 'WEAPON_COMBATPISTOL' or name == 'WEAPON_PUMPSHOTGUN' or name == 'WEAPON_SMG' then
+	or name == 'WEAPON_ASSAULTSHOTGUN' or name == 'WEAPON_ASSAULTSMG' or name == 'WEAPON_AUTOSHOTGUN' or name == 'WEAPON_CARBINERIFLE' or name == 'WEAPON_SNIPERRIFLE' or name == 'WEAPON_COMBATPISTOL' or name == 'WEAPON_PUMPSHOTGUN' or name == 'WEAPON_SMG' 
+	or name == 'WEAPON_PISTOL_MK2' or name == 'WEAPON_SNSPISTOL_MK2' or name == 'WEAPON_SNSPISTOL' or name == 'WEAPON_PISTOL50' or name == 'WEAPON_HEAVYPISTOL' or name == 'WEAPON_MICROSMG' or name == 'WEAPON_MINISMG' or name == 'WEAPON_SMG_MK2'
+	or name == 'WEAPON_COMBATPDW' or name == 'WEAPON_ASSAULTRIFLE_MK2' or name == 'WEAPON_CARBINERIFLE_MK2' or name == 'WEAPON_SPECIALCARBINE' or name == 'WEAPON_SPECIALCARBINE_MK2' or name == 'WEAPON_BULLPUPRIFLE' or name == 'WEAPON_BULLPUPRIFLE_MK2'
+	or name == 'WEAPON_COMPACTRIFLE' or name == 'WEAPON_GUSENBERG' or name == 'WEAPON_RPG' or name == 'WEAPON_HOMINGLAUNCHER' then
 	   local hash = GetHashKey(name)
 	   MySQL.Async.fetchAll('SELECT * FROM ammunition WHERE hash = @hash AND owner = @owner', {
 		['@hash'] = hash,
