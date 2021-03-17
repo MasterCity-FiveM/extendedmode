@@ -260,12 +260,19 @@ ESX.RegisterUsableItem = function(item, cb)
 end
 
 ESX.UseItem = function(source, item)
+	if ESX.UsableItemsCallbacks[item] == nil then
+		return
+	end
 	ESX.UsableItemsCallbacks[item](source)
 end
 
 ESX.GetItemLabel = function(item)
 	if ESX.Items[item] then
-		return ESX.Items[item].label
+		if ESX.Items[item].label_fa ~= nil then
+			return ESX.Items[item].label_fa
+		else
+			return ESX.Items[item].label
+		end
 	end
 end
 

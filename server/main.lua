@@ -180,6 +180,7 @@ function loadESXPlayer(identifier, playerId)
 					name = name,
 					count = count,
 					label = item.label,
+					label_fa = item.label_fa,
 					weight = item.weight,
 					limit = item.limit,
 					usable = ESX.UsableItemsCallbacks[name] ~= nil,
@@ -428,6 +429,11 @@ end)
 RegisterNetEvent('esx:useItem')
 AddEventHandler('esx:useItem', function(itemName)
 	local xPlayer = ESX.GetPlayerFromId(source)
+	
+	if xPlayer == nil or itemName == nil then
+		return
+	end
+	
 	local count = xPlayer.getInventoryItem(itemName).count
 
 	if count > 0 then
