@@ -452,7 +452,7 @@ AddEventHandler('esx:onPickup', function(id)
 			if xPlayer.canCarryItem(pickup.name, pickup.count) then
 				xPlayer.addInventoryItem(pickup.name, pickup.count)
 				if pickup.weaponID ~= nil then
-				   TriggerEvent('DP_Inventory:weaponID', pickup.weaponID, xPlayer.identifier)
+				   TriggerEvent('Master_Inventory:weaponID', pickup.weaponID, xPlayer.identifier)
 				end
 				success = true
 			else
@@ -466,7 +466,7 @@ AddEventHandler('esx:onPickup', function(id)
 				xPlayer.showNotification(_U('threw_weapon_already'))
 			else
 				if pickup.weaponID ~= nil then
-				   TriggerEvent('DP_Inventory:weaponID', pickup.weaponID, xPlayer.identifier)
+				   TriggerEvent('Master_Inventory:weaponID', pickup.weaponID, xPlayer.identifier)
 				end
 				success = true
 				xPlayer.addWeapon(pickup.name, pickup.count)
