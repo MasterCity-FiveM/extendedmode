@@ -1,3 +1,5 @@
+ESX.CustomFunctions = {}
+
 ESX.Trace = function(msg)
 	if Config.EnableDebug then
 		print(('[ExtendedMode] [^2TRACE^7] %s^7'):format(msg))
@@ -18,6 +20,16 @@ ESX.SetTimeout = function(msec, cb)
 	ESX.TimeoutCount = id
 
 	return id
+end
+
+ESX.AddCustomFunction = function(name, cb)
+	ESX.CustomFunctions[name] = cb
+end
+
+ESX.RunCustomFunction = function(name, ...)
+	if ESX.CustomFunctions[name] ~= nil then
+		ESX.CustomFunctions[name](...)
+	end
 end
 
 ESX.RegisterCommand = function(name, group, cb, allowConsole, suggestion)
