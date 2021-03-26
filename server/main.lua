@@ -298,8 +298,8 @@ AddEventHandler('esx:giveInventoryItem', function(target, type, itemName, itemCo
 				sourceXPlayer.removeInventoryItem(itemName, itemCount)
 				targetXPlayer.addInventoryItem   (itemName, itemCount)
 
-				sourceXPlayer.showNotification(_U('gave_item', itemCount, sourceItem.label, targetXPlayer.name))
-				targetXPlayer.showNotification(_U('received_item', itemCount, sourceItem.label, sourceXPlayer.name))
+				sourceXPlayer.showNotification(_U('gave_item', itemCount, sourceItem.label, GetPlayerName(targetXPlayer.source)))
+				targetXPlayer.showNotification(_U('received_item', itemCount, sourceItem.label, GetPlayerName(sourceXPlayer.source)))
 			else
 				sourceXPlayer.showNotification(_U('ex_inv_lim', targetXPlayer.name))
 			end
