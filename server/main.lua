@@ -100,7 +100,7 @@ function loadESXPlayer(identifier, playerId)
 		lastip = ''
 	}
 
-	MySQL.Async.fetchAll('SELECT accounts, job, firstname, lastname, job_grade, `group`, loadout, position, inventory, verified, phone, lastip, job_sub FROM users WHERE identifier = @identifier', {
+	MySQL.Async.fetchAll('SELECT accounts, job, firstname, lastname, job_grade, `rank`, loadout, position, inventory, verified, phone, lastip, job_sub FROM users WHERE identifier = @identifier', {
 		['@identifier'] = identifier
 	}, function(result)
 		local job, grade, jobObject, gradeObject = result[1].job, tostring(result[1].job_grade)
@@ -194,11 +194,11 @@ function loadESXPlayer(identifier, playerId)
 			return a.label < b.label
 		end)
 
-		-- Group
-		if result[1].group then
-			userData.group = result[1].group
+		-- Rank
+		if result[1].rank then
+			userData.rank = tonumber(result[1].rank)
 		else
-			userData.group = 'user'
+			userData.rank = 0
 		end
 
 		-- Loadout
@@ -232,7 +232,7 @@ function loadESXPlayer(identifier, playerId)
 		end
 
 		-- Create Extended Player Object
-		local xPlayer = CreateExtendedPlayer(playerId, identifier, userData.group, userData.accounts, userData.inventory, userData.weight, userData.job, userData.loadout, userData.playerName, userData.coords, userData.verified, userData.phone, userData.lastip, userData.firstname, userData.lastname)
+		local xPlayer = CreateExtendedPlayer(playerId, identifier, userData.rank, userData.accounts, userData.inventory, userData.weight, userData.job, userData.loadout, userData.playerName, userData.coords, userData.verified, userData.phone, userData.lastip, userData.firstname, userData.lastname)
 		ESX.Players[playerId] = xPlayer
 		TriggerEvent('esx:playerLoaded', playerId, xPlayer)
 
@@ -545,7 +545,7 @@ AddEventHandler('es_db:retrieveUser', function(identifier, cb, tries)
 		local player = ESX.GetPlayerFromIdentifier(identifier)
 
 		if player then
-			cb({permission_level = 0, money = player.getMoney(), bank = 0, identifier = player.identifier, license = player.get("license"), group = player.group, roles = ""}, false, true)
+			cb({permission_level = 0, money = player.getMoney(), bank = 0, identifier = player.identifier, license = player.get("license"), rank = player.rank, roles = ""}, false, true)
 		else
 			Citizen.SetTimeout(100, function()
 				TriggerEvent("es_db:retrieveUser", identifier, cb, tries)

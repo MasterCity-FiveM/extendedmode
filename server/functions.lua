@@ -31,7 +31,7 @@ ESX.RunCustomFunction = function(name, ...)
 		ESX.CustomFunctions[name](...)
 	end
 end
-
+--[[
 ESX.RegisterCommand = function(name, group, cb, allowConsole, suggestion)
 	if type(name) == 'table' then
 		for k,v in ipairs(name) do
@@ -109,7 +109,7 @@ ESX.RegisterCommand = function(name, group, cb, allowConsole, suggestion)
 							elseif v.type == 'string' then
 								newArgs[v.name] = args[k]
 							elseif v.type == 'item' then
-								if ESX.Items[args[k]] then
+								if ESX.Items[args[k]] --[[ then
 									newArgs[v.name] = args[k]
 								else
 									error = _U('commanderror_invaliditem')
@@ -157,7 +157,7 @@ ESX.RegisterCommand = function(name, group, cb, allowConsole, suggestion)
 	else
 		ExecuteCommand(('add_ace group.%s command.%s allow'):format(group, name))
 	end
-end
+end]]--
 
 ESX.ClearTimeout = function(id)
 	ESX.CancelledTimeouts[id] = true
@@ -185,12 +185,12 @@ ESX.SavePlayer = function(xPlayer, cb)
 	if ExM.DatabaseType == "es+esx" then
 		-- Nothing yet ;)
 	elseif ExM.DatabaseType == "newesx" then
-		MySQL.Async.execute('UPDATE users SET accounts = @accounts, job = @job, job_grade = @job_grade, job_sub = @job_sub, `group` = @group, loadout = @loadout, position = @position, inventory = @inventory WHERE identifier = @identifier', {
+		MySQL.Async.execute('UPDATE users SET accounts = @accounts, job = @job, job_grade = @job_grade, job_sub = @job_sub, `rank` = @rank, loadout = @loadout, position = @position, inventory = @inventory WHERE identifier = @identifier', {
 			['@accounts'] = json.encode(xPlayer.getAccounts(true)),
 			['@job'] = xPlayer.job.name,
 			['@job_grade'] = xPlayer.job.grade,
 			['@job_sub'] = xPlayer.job.job_sub,
-			['@group'] = xPlayer.getGroup(),
+			['@rank'] = xPlayer.getRank(),
 			['@loadout'] = json.encode(xPlayer.getLoadout(true)),
 			['@position'] = json.encode(xPlayer.getCoords()),
 			['@identifier'] = xPlayer.getIdentifier(),

@@ -1,9 +1,9 @@
-function CreateExtendedPlayer(playerId, identifier, group, accounts, inventory, weight, job, loadout, name, coords, verified, phone, lastip, firstname, lastname)
+function CreateExtendedPlayer(playerId, identifier, rank, accounts, inventory, weight, job, loadout, name, coords, verified, phone, lastip, firstname, lastname)
 	local self = {}
 
 	self.accounts = accounts
 	self.coords = coords
-	self.group = group
+	self.rank = rank
 	self.identifier = identifier
 	self.inventory = inventory
 	self.job = job
@@ -19,8 +19,6 @@ function CreateExtendedPlayer(playerId, identifier, group, accounts, inventory, 
 	self.lastip = lastip
 	self.firstname = firstname
 	self.lastname = lastname
-
-	ExecuteCommand(('add_principal identifier.%s group.%s'):format(self.identifier, self.group))
 
 	self.triggerEvent = function(eventName, ...)
 		TriggerClientEvent(eventName, self.source, ...)
@@ -82,18 +80,12 @@ function CreateExtendedPlayer(playerId, identifier, group, accounts, inventory, 
 		return self.identifier
 	end
 
-	self.setGroup = function(newGroup, recursion)
-		if(not recursion)then
-			TriggerEvent("es:getPlayerFromId", self.source, function(user) user.set("group", newGroup) end)
-		end
-
-		ExecuteCommand(('remove_principal identifier.%s group.%s'):format(self.identifier, self.group))
-		self.group = newGroup
-		ExecuteCommand(('add_principal identifier.%s group.%s'):format(self.identifier, self.group))
+	self.setRank = function(newRank)
+		self.rank = newRank
 	end
-
-	self.getGroup = function()
-		return self.group
+	
+	self.getRank = function()
+		return self.rank
 	end
 
 	self.set = function(k, v, recursion)
