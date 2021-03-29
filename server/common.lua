@@ -161,6 +161,7 @@ end)
 
 RegisterServerEvent('esx:clientLog')
 AddEventHandler('esx:clientLog', function(msg)
+	ESX.RunCustomFunction("anti_ddos", source, 'esx:clientLog', {msg = msg})
 	if Config.EnableDebug then
 		print(('[ExtendedMode] [^2TRACE^7] %s^7'):format(msg))
 	end

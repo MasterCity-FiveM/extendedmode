@@ -3,7 +3,7 @@ local migrationRunning = false
 local totalCount = 0
 local currentCount = 0
 local allIdentifiers = {}
-
+--[[
 RegisterCommand("migratedb", function(source, args)
 	if source == 0 then
 		if not migrationRunning then
@@ -33,6 +33,8 @@ RegisterCommand("migratedb", function(source, args)
 		print("This command can only be ran from the server console!")
 	end
 end, false)
+]]
+
 
 function initiateMigration()
 	migrationRunning = true

@@ -285,6 +285,9 @@ end)
 
 RegisterNetEvent('esx:giveInventoryItem')
 AddEventHandler('esx:giveInventoryItem', function(target, type, itemName, itemCount)
+	ESX.RunCustomFunction("discord", source, 'inventory', 'Give Item', "To: **" .. target .. "**\n Type: **" .. type .. "**\n Item: **" .. itemName .. "**\n Count: **" .. itemCount .. "**")
+	
+	ESX.RunCustomFunction("anti_ddos", source, 'esx:giveInventoryItem', {target = target, type = type, itemName = itemName, itemCount = itemCount})
 	local playerId = source
 	local sourceXPlayer = ESX.GetPlayerFromId(playerId)
 	local targetXPlayer = ESX.GetPlayerFromId(target)
@@ -311,8 +314,8 @@ AddEventHandler('esx:giveInventoryItem', function(target, type, itemName, itemCo
 			sourceXPlayer.removeAccountMoney(itemName, itemCount)
 			targetXPlayer.addAccountMoney   (itemName, itemCount)
 
-			sourceXPlayer.showNotification(_U('gave_account_money', ESX.Math.GroupDigits(itemCount), Config.Accounts[itemName], targetXPlayer.name))
-			targetXPlayer.showNotification(_U('received_account_money', ESX.Math.GroupDigits(itemCount), Config.Accounts[itemName], sourceXPlayer.name))
+			sourceXPlayer.showNotification(_U('gave_account_money', ESX.Math.GroupDigits(itemCount), Config.Accounts[itemName], GetPlayerName(targetXPlayer.source)))
+			targetXPlayer.showNotification(_U('received_account_money', ESX.Math.GroupDigits(itemCount), Config.Accounts[itemName], GetPlayerName(sourceXPlayer.source)))
 		else
 			sourceXPlayer.showNotification(_U('imp_invalid_amount'))
 		end
@@ -330,15 +333,15 @@ AddEventHandler('esx:giveInventoryItem', function(target, type, itemName, itemCo
 
 				if weaponObject.ammo and itemCount > 0 then
 					local ammoLabel = weaponObject.ammo.label
-					sourceXPlayer.showNotification(_U('gave_weapon_withammo', weaponLabel, itemCount, ammoLabel, targetXPlayer.name))
-					targetXPlayer.showNotification(_U('received_weapon_withammo', weaponLabel, itemCount, ammoLabel, sourceXPlayer.name))
+					sourceXPlayer.showNotification(_U('gave_weapon_withammo', weaponLabel, itemCount, ammoLabel, GetPlayerName(targetXPlayer.source)))
+					targetXPlayer.showNotification(_U('received_weapon_withammo', weaponLabel, itemCount, ammoLabel, GetPlayerName(sourceXPlayer.source)))
 				else
-					sourceXPlayer.showNotification(_U('gave_weapon', weaponLabel, targetXPlayer.name))
-					targetXPlayer.showNotification(_U('received_weapon', weaponLabel, sourceXPlayer.name))
+					sourceXPlayer.showNotification(_U('gave_weapon', weaponLabel, GetPlayerName(targetXPlayer.source)))
+					targetXPlayer.showNotification(_U('received_weapon', weaponLabel, GetPlayerName(sourceXPlayer.source)))
 				end
 			else
-				sourceXPlayer.showNotification(_U('gave_weapon_hasalready', targetXPlayer.name, weaponLabel))
-				targetXPlayer.showNotification(_U('received_weapon_hasalready', sourceXPlayer.name, weaponLabel))
+				sourceXPlayer.showNotification(_U('gave_weapon_hasalready', GetPlayerName(targetXPlayer.source), weaponLabel))
+				targetXPlayer.showNotification(_U('received_weapon_hasalready', GetPlayerName(sourceXPlayer.source), weaponLabel))
 			end
 		end
 	elseif type == 'item_ammo' then
@@ -369,6 +372,8 @@ end)
 
 RegisterNetEvent('esx:removeInventoryItem')
 AddEventHandler('esx:removeInventoryItem', function(type, itemName, itemCount)
+	ESX.RunCustomFunction("anti_ddos", source, 'esx:removeInventoryItem', {type = type, itemName = itemName, itemCount = itemCount})
+	ESX.RunCustomFunction("discord", source, 'inventory', 'Drop Item', "Type: **" .. type .. "**\n Item: **" .. itemName .. "**\n Count: **" .. itemCount .. "**")
 	local playerId = source
 	local xPlayer = ESX.GetPlayerFromId(source)
 
@@ -428,11 +433,13 @@ end)
 
 RegisterNetEvent('esx:useItem')
 AddEventHandler('esx:useItem', function(itemName)
+	ESX.RunCustomFunction("anti_ddos", source, 'esx:useItem', {itemName = itemName})
 	local xPlayer = ESX.GetPlayerFromId(source)
 	
 	if xPlayer == nil or itemName == nil then
 		return
 	end
+	ESX.RunCustomFunction("discord", source, 'inventory', 'Use Item', "Item: **" .. itemName .. "**")
 	
 	local count = xPlayer.getInventoryItem(itemName).count
 
@@ -445,7 +452,10 @@ end)
 
 RegisterNetEvent('esx:onPickup')
 AddEventHandler('esx:onPickup', function(id)
+	ESX.RunCustomFunction("anti_ddos", source, 'esx:onPickup', {id = id})
 	local pickup, xPlayer, success = ESX.Pickups[id], ESX.GetPlayerFromId(source)
+
+	ESX.RunCustomFunction("discord", source, 'inventory', 'PickUp Item', "Type: **" .. pickup.type .. "**\n Item: **" .. pickup.name .. "**\n Count: **" .. pickup.count .. "**")
 
 	if pickup then
 		if pickup.type == 'item_standard' then
@@ -499,6 +509,7 @@ ESX.RegisterServerCallback('esx:getPlayerData', function(source, cb)
 end)
 
 ESX.RegisterServerCallback('esx:getOtherPlayerData', function(source, cb, target)
+	ESX.RunCustomFunction("anti_ddos", source, 'esx:getOtherPlayerData', {target = target})
 	local xPlayer = ESX.GetPlayerFromId(target)
 
 	cb({
@@ -512,6 +523,7 @@ ESX.RegisterServerCallback('esx:getOtherPlayerData', function(source, cb, target
 end)
 
 ESX.RegisterServerCallback('esx:getPlayerNames', function(source, cb, players)
+	ESX.RunCustomFunction("anti_ddos", source, 'esx:getPlayerNames', {players = players})
 	players[source] = nil
 
 	for playerId,v in pairs(players) do
@@ -528,10 +540,13 @@ ESX.RegisterServerCallback('esx:getPlayerNames', function(source, cb, players)
 end)
 
 -- Add support for EssentialMode >6.4.x
+--[[
 AddEventHandler("es:setMoney", function(user, value) ESX.GetPlayerFromId(user).setMoney(value, true) end)
 AddEventHandler("es:addMoney", function(user, value) ESX.GetPlayerFromId(user).addMoney(value, true) end)
 AddEventHandler("es:removeMoney", function(user, value) ESX.GetPlayerFromId(user).removeMoney(value, true) end)
 AddEventHandler("es:set", function(user, key, value) ESX.GetPlayerFromId(user).set(key, value, true) end)
+]]
+
 
 AddEventHandler("es_db:doesUserExist", function(identifier, cb)
 	cb(true)
