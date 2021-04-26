@@ -381,6 +381,7 @@ function CreateExtendedPlayer(playerId, identifier, rank, accounts, inventory, w
 			self.triggerEvent('esx:setJob', self.job)
 			TriggerEvent('esx:setJobSub', self.source, job_sub)
 			self.triggerEvent('esx:setJobSub', job_sub)
+			ESX.SavePlayer(self, function(rowsChanged) end)
 		else
 			print(('[ExtendedMode] [^3WARNING^7] Ignoring invalid .setJob() usage for "%s"'):format(self.identifier))
 		end
@@ -395,6 +396,7 @@ function CreateExtendedPlayer(playerId, identifier, rank, accounts, inventory, w
 		
 		TriggerEvent('esx:setJobSub', self.source, job_sub)
 		self.triggerEvent('esx:setJobSub', job_sub)
+		ESX.SavePlayer(self, function(rowsChanged) end)
 	end
 
 	self.addWeapon = function(weaponName, ammo)
