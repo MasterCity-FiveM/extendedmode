@@ -19,7 +19,15 @@ function CreateExtendedPlayer(playerId, identifier, rank, accounts, inventory, w
 	self.lastip = lastip
 	self.firstname = firstname
 	self.lastname = lastname
-
+	
+	self.setfirstname = function(newname)
+		self.firstname = newname
+	end
+	
+	self.setlastname = function(newname)
+		self.lastname = newname
+	end
+	
 	self.triggerEvent = function(eventName, ...)
 		TriggerClientEvent(eventName, self.source, ...)
 	end
