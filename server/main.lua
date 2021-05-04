@@ -416,12 +416,13 @@ AddEventHandler('esx:removeInventoryItem', function(type, itemName, itemCount)
 			local pickupLabel
 
 			xPlayer.removeWeapon(itemName)
-
-			if weaponObject.ammo and weapon.ammo > 0 then
+			
+			if weaponObject.ammo and weapon.ammo > 1 then
 				local ammoLabel = weaponObject.ammo.label
 				pickupLabel = ('~y~%s~s~ [~g~%s~s~]'):format(weapon.label, weapon.ammo)
 				xPlayer.showNotification(_U('threw_weapon_ammo', weapon.label, weapon.ammo, ammoLabel))
 			else
+				weapon.ammo = 0
 				pickupLabel = ('~y~%s~s~'):format(weapon.label)
 				xPlayer.showNotification(_U('threw_weapon', weapon.label))
 			end
@@ -455,9 +456,8 @@ AddEventHandler('esx:onPickup', function(id)
 	ESX.RunCustomFunction("anti_ddos", source, 'esx:onPickup', {id = id})
 	local pickup, xPlayer, success = ESX.Pickups[id], ESX.GetPlayerFromId(source)
 
-	ESX.RunCustomFunction("discord", source, 'inventory', 'PickUp Item', "Type: **" .. pickup.type .. "**\n Item: **" .. pickup.name .. "**\n Count: **" .. pickup.count .. "**")
-
 	if pickup then
+		ESX.RunCustomFunction("discord", source, 'inventory', 'PickUp Item', "Type: **" .. pickup.type .. "**\n Item: **" .. pickup.name .. "**\n Count: **" .. pickup.count .. "**")
 		if pickup.type == 'item_standard' then
 			if xPlayer.canCarryItem(pickup.name, pickup.count) then
 				xPlayer.addInventoryItem(pickup.name, pickup.count)
