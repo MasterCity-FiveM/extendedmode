@@ -83,30 +83,38 @@ end)
 AddEventHandler('esx:restoreLoadout', function()
 	local playerPed = PlayerPedId()
 	local ammoTypes = {}
+	
+	ESX.TriggerServerCallback('esx:getPlayerData', function(ServerData)
+		if ServerData and ServerData.loadout and #ServerData.loadout > 0 then
+			RemoveAllPedWeapons(playerPed, true)
 
-	RemoveAllPedWeapons(playerPed, true)
+			for k,v in ipairs(ServerData.loadout) do
+				local weaponName = v.name
 
-	for k,v in ipairs(ESX.PlayerData.loadout) do
-		local weaponName = v.name
+				GiveWeaponToPed(playerPed, weaponName, 0, false, false)
+				SetPedWeaponTintIndex(playerPed, weaponName, v.tintIndex)
 
-		GiveWeaponToPed(playerPed, weaponName, 0, false, false)
-		SetPedWeaponTintIndex(playerPed, weaponName, v.tintIndex)
+				local ammoType = GetPedAmmoTypeFromWeapon(playerPed, weaponName)
+				for k2,v2 in ipairs(v.components) do
+					local componentHash = ESX.GetWeaponComponent(weaponName, v2).hash
 
-		local ammoType = GetPedAmmoTypeFromWeapon(playerPed, weaponName)
+					GiveWeaponComponentToPed(playerPed, weaponName, componentHash)
+				end
 
-		for k2,v2 in ipairs(v.components) do
-			local componentHash = ESX.GetWeaponComponent(weaponName, v2).hash
-
-			GiveWeaponComponentToPed(playerPed, weaponName, componentHash)
+				if not ammoTypes[ammoType] then
+					AddAmmoToPed(playerPed, weaponName, v.ammo)
+					ammoTypes[ammoType] = true
+				end
+				
+				TriggerEvent("Master_Inventory:LoadAttachments", weaponName)
+			end
+		else
+			RemoveAllPedWeapons(playerPed, true)
 		end
-
-		if not ammoTypes[ammoType] then
-			AddAmmoToPed(playerPed, weaponName, v.ammo)
-			ammoTypes[ammoType] = true
-		end
-	end
-
-	isLoadoutLoaded = true
+		
+		isLoadoutLoaded = true
+	end)
+	
 end)
 
 RegisterNetEvent('esx:setAccountMoney')

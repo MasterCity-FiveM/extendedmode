@@ -323,11 +323,10 @@ ESX.CreatePickup = function(type, name, count, label, playerId, components, tint
 		if #results ~= 0 then
 			if results[1].weapon_id then
 				ESX.Pickups[pickupId].weaponID = results[1].weapon_id
-				MySQL.Async.execute('UPDATE ammunition SET owner = @owner, count = @count WHERE id = @id and hash = @hash and weapon_id = @weapon_id', {
+				MySQL.Async.execute('UPDATE ammunition SET owner = @owner WHERE id = @id and hash = @hash and weapon_id = @weapon_id', {
 					['@id'] = results[1].id,
 					['@owner'] = nil,
 					['@weapon_id'] = results[1].weapon_id,
-					['@count'] = count,
 					['@hash'] = hash
 				}, function(results2)
 				end)

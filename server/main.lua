@@ -417,12 +417,11 @@ AddEventHandler('esx:removeInventoryItem', function(type, itemName, itemCount)
 
 			xPlayer.removeWeapon(itemName)
 			
-			if weaponObject.ammo and weapon.ammo > 1 then
+			if weaponObject.ammo and weapon.ammo > 0 then
 				local ammoLabel = weaponObject.ammo.label
 				pickupLabel = ('~y~%s~s~ [~g~%s~s~]'):format(weapon.label, weapon.ammo)
 				xPlayer.showNotification(_U('threw_weapon_ammo', weapon.label, weapon.ammo, ammoLabel))
 			else
-				weapon.ammo = 0
 				pickupLabel = ('~y~%s~s~'):format(weapon.label)
 				xPlayer.showNotification(_U('threw_weapon', weapon.label))
 			end
