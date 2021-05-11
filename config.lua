@@ -9,13 +9,12 @@ Config.Accounts = {
 
 Config.StartingAccountMoney = {bank = 2000, money = 400}
 
-Config.EnableSocietyPayouts = true -- pay from the society account that the player is employed at? Requirement: esx_society
 Config.DisableWantedLevel   = true
 Config.EnableHud            = false -- enable the default hud? Display current job and accounts (black, bank & cash)
 Config.EnablePvP            = true -- enable pvp?
 Config.MaxWeight            = 90000   -- the max inventory weight without backpack(this is in grams, not kg!)
 
-Config.PaycheckInterval     = 60 * 60000 -- how often to recieve pay checks in milliseconds
+Config.PaycheckInterval     = 15 * 60000 -- how often to recieve pay checks in milliseconds
 
 Config.EnableDebug          = false
 Config.PrimaryIdentifier	= "steam" -- Options: steam, license (social club), fivem, discord, xbl, live (default steam, recommended: fivem) this SHOULD function with most older scripts too!
