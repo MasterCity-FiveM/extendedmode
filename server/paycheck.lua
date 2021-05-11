@@ -33,6 +33,23 @@ ESX.StartPayCheck = function()
 		
 		SetTimeout(Config.PaycheckInterval, payCheck)
 	end
+	
+	function BankPayment()
+		local xPlayers = ESX.GetPlayers()
+
+		for i=1, #xPlayers, 1 do
+			local xPlayer = ESX.GetPlayerFromId(xPlayers[i])
+			local bankMoney  = xPlayer.getAccount('bank').money
+			if bankMoney > 0 then
+				MoneyMustAdd = math.ceil(bankMoney / 99)
+				xPlayer.addAccountMoney('bank', MoneyMustAdd)
+				TriggerClientEvent('esx:showAdvancedNotification', xPlayer.source, _U('bank'), 'Soode Banki', 'Shoma ~g~' .. MoneyMustAdd .. '$~s~ sood seporde gozari daryaft kardid.', 'CHAR_BANK_MAZE', 9)
+			end
+		end
+		
+		SetTimeout(Config.DepositInterval, BankPayment)
+	end
 
 	SetTimeout(Config.PaycheckInterval, payCheck)
+	SetTimeout(Config.DepositInterval, BankPayment)
 end
