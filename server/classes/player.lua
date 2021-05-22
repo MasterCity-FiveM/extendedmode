@@ -318,7 +318,7 @@ function CreateExtendedPlayer(playerId, identifier, rank, accounts, inventory, w
 	end
 
 	self.canCarryItem = function(name, count)
-		if self.weight == nil or ESX.Items[name].weight == nil then 
+		if self.weight == nil or ESX.Items[name] == nil or ESX.Items[name].weight == nil then 
 			return true
 		end
 		
