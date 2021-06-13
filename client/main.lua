@@ -577,8 +577,7 @@ CreateThread(function()
 			local playerPed = PlayerPedId()
 			local ped = GetPlayerPed(-1)
 			DisableControlAction(1, 44, true)
-			
-			
+						
 			if IsPedShooting(playerPed) then
 				local _, weaponHash = GetCurrentPedWeapon(playerPed, true)
 				local weapon = ESX.GetWeaponFromHash(weaponHash)
@@ -758,6 +757,7 @@ CreateThread(function()
 		-- update the players position every second instead of a configed amount otherwise
 		-- serverside won't catch up
 		Wait(1000)
+		
 		local playerPed = PlayerPedId()
 		local playerCoords = GetEntityCoords(playerPed)
 		local distance = #(playerCoords - previousCoords)
@@ -769,6 +769,18 @@ CreateThread(function()
 			TriggerServerEvent('esx:updateCoords', formattedCoords)
 			if distance > 1 then
 				TriggerServerEvent('esx:updateCoords', formattedCoords)
+			end
+		end
+		
+		for i=1, #Config.Weapons, 1 do
+
+			local weaponName = Config.Weapons[i].name
+			local weaponHash = GetHashKey(weaponName)
+			local weaponComponents = {}
+
+			if HasPedGotWeapon(playerPed, weaponHash, false) and weaponName ~= 'WEAPON_UNARMED' then
+				local ammo = GetAmmoInPedWeapon(playerPed, weaponHash)
+				TriggerServerEvent('esx:updateWeaponAmmo', weaponName, ammo)
 			end
 		end
 	end
