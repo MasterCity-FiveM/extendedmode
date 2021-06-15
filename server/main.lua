@@ -278,7 +278,7 @@ RegisterNetEvent('esx:updateWeaponAmmo')
 AddEventHandler('esx:updateWeaponAmmo', function(weaponName, ammoCount)
 	local xPlayer = ESX.GetPlayerFromId(source)
 
-	if xPlayer then
+	if xPlayer and not xPlayer.get('paintball') then
 		xPlayer.updateWeaponAmmo(weaponName, ammoCount)
 	end
 end)
