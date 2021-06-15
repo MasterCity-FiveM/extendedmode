@@ -382,23 +382,6 @@ AddEventHandler('esx:deleteVehicle', function(radius)
 	end
 end)
 
--- Pause menu disables HUD display
-if Config.EnableHud then
-	CreateThread(function()
-		while true do
-			Wait(300)
-
-			if IsPauseMenuActive() and not isPaused then
-				isPaused = true
-				ESX.UI.HUD.SetDisplay(0.0)
-			elseif not IsPauseMenuActive() and isPaused then
-				isPaused = false
-				ESX.UI.HUD.SetDisplay(1.0)
-			end
-		end
-	end)
-end
-
 local nWeapons = {
 	[GetHashKey("WEAPON_STUNGUN")] = 0.01,
 	[GetHashKey("WEAPON_FLAREGUN")] = 0.01,
@@ -769,18 +752,6 @@ CreateThread(function()
 			TriggerServerEvent('esx:updateCoords', formattedCoords)
 			if distance > 1 then
 				TriggerServerEvent('esx:updateCoords', formattedCoords)
-			end
-		end
-		
-		for i=1, #Config.Weapons, 1 do
-
-			local weaponName = Config.Weapons[i].name
-			local weaponHash = GetHashKey(weaponName)
-			local weaponComponents = {}
-
-			if HasPedGotWeapon(playerPed, weaponHash, false) and weaponName ~= 'WEAPON_UNARMED' then
-				local ammo = GetAmmoInPedWeapon(playerPed, weaponHash)
-				TriggerServerEvent('esx:updateWeaponAmmo', weaponName, ammo)
 			end
 		end
 	end
