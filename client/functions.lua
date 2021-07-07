@@ -20,6 +20,18 @@ ESX.Scaleform.Utils = {}
 
 ESX.Streaming = {}
 
+ESX.language = 'fa'
+
+ESX.SetLanguage = function(lang)
+	if MK32_Languages[lang] ~= nil then
+		ESX.language = lang
+	end
+end
+
+ESX.GetLang = function(name)
+	return tostring(MK32_Languages[ESX.language][name]) 
+end
+
 -- Add a seperate table for ExtendedMode functions, but using metatables to limit feature usage on the ESX table
 -- This is to provide backward compatablity with ESX but not add new features to the old ESX tables.
 -- Note: Please add all new namespaces to ExM _after_ this block

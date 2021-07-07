@@ -1,4 +1,5 @@
 Locales = {}
+MK32_Languages = {}
 
 function _(str, ...)  -- Translate string
 

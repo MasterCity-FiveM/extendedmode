@@ -19,7 +19,16 @@ function CreateExtendedPlayer(playerId, identifier, rank, accounts, inventory, w
 	self.lastip = lastip
 	self.firstname = firstname
 	self.lastname = lastname
-	
+	self.language = 'fa'
+
+	self.SetLanguage = function(lang)
+		self.language = lang
+	end
+
+	self.GetLang = function(name)
+		return tostring(MK32_Languages[self.language][name]) 
+	end
+
 	self.setfirstname = function(newname)
 		self.firstname = newname
 	end
