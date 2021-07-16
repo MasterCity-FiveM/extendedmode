@@ -7,7 +7,7 @@ Config.Accounts = {
 	money = _U('account_money')
 }
 
-Config.StartingAccountMoney = {bank = 2000, money = 400}
+Config.StartingAccountMoney = {bank = 5000, money = 400}
 
 Config.DisableWantedLevel   = true
 Config.EnableHud            = false -- enable the default hud? Display current job and accounts (black, bank & cash)

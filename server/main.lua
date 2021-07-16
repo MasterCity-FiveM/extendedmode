@@ -441,6 +441,10 @@ AddEventHandler('esx:useItem', function(itemName)
 	end
 	ESX.RunCustomFunction("discord", source, 'inventory', 'Use Item', "Item: **" .. itemName .. "**")
 	
+	if xPlayer.getInventoryItem(itemName) == nil then
+		return
+	end
+	
 	local count = xPlayer.getInventoryItem(itemName).count
 
 	if count > 0 then
