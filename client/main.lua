@@ -272,6 +272,10 @@ AddEventHandler('esx:spawnVehicle', function(vehicle)
 
 		ESX.Game.SpawnVehicle(vehicle, playerCoords, playerHeading, function(vehicle)
 			TaskWarpPedIntoVehicle(playerPed, vehicle, -1)
+			
+			local vehNet = NetworkGetNetworkIdFromEntity(vehicle)
+			local plate = GetVehicleNumberPlateText(vehicle)
+			TriggerServerEvent("car_lock:GiveKeys", vehNet, plate)
 		end)
 	else
 		TriggerEvent('chat:addMessage', { args = { '^1SYSTEM', 'Invalid vehicle model.' } })
