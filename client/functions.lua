@@ -766,7 +766,7 @@ ESX.Game.GetVehicleProperties = function(vehicle)
 end
 
 ESX.Game.SetVehicleProperties = function(vehicle, props)
-	if DoesEntityExist(vehicle) then
+	if DoesEntityExist(vehicle) and props then
 		local colorPrimary, colorSecondary = GetVehicleColours(vehicle)
 		local pearlescentColor, wheelColor = GetVehicleExtraColours(vehicle)
 		SetVehicleModKit(vehicle, 0)
